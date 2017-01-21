@@ -12,7 +12,6 @@ Flask-WhooshAlchemy==0.56
 Jinja2==2.8
 Mako==1.0.6
 MarkupSafe==0.23
-PIL==1.1.7
 SQLAlchemy==1.1.4
 Tempita==0.5.2
 WTForms==2.1
