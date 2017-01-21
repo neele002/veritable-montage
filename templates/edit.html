@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% from 'macros.html' import render_form %}
+{% block content %}
+<div class="content">
+{{ render_form(form, action_url='/edit', action_text='Save',x=x,y=y) }}</div>
+{% endblock %}

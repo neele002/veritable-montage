@@ -1,0 +1,22 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<script type="text/javascript">
+
+</script>
+<h1>Add Form Type</h1>
+<form action="" method="post" name="GameType">
+    {{ form.hidden_tag() }}
+    <p>
+        Game Type<br>
+        {{ form.gametype(size=140) }}
+        {% for error in form.gametype.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+        
+    </p>
+    
+    <p><input type="submit" value="Add"></p>
+</form>
+{% endblock %}

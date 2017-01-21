@@ -1,0 +1,58 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<script type="text/javascript">
+
+</script>
+<h1>Old One Game</h1><div class="l-box-lrg pure-u-1 pure-u-md-2-5">
+<form action="" method="post" name="Game" class="pure-form pure-form-stacked" enctype = "multipart/form-data">
+    {{ form.hidden_tag() }}
+    <p>
+        <div>
+        {{ form.desc.label }} : {{ form.desc }}
+        {% for error in form.desc.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}
+       
+        {{ form.gametype.label() }} : {{ form.gametype() }}
+        {% for error in form.gametype.errors %}
+          <span style="color: red;">[{{error}}]</span>
+            {% endfor %}
+        </div>
+    
+        <div>{{ form.startdate.label }} {{ form.startdate() }}
+        {% for error in form.startdate.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}
+          {{ form.enddate.label() }} {{ form.enddate() }}
+        {% for error in form.enddate.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}</p><br></div>
+
+        <div id="taskentry">{{ form.task.label }} : {{ form.task }} {{ form.unit }} {{ form.button }}  </div>
+        <div><table id="tasktble">
+            <tr><th>Task</th><th>Measure</th></tr>
+              {% for i in x %}
+               
+               <tr><td> {{ i.item }}</td> <td> {{ i.unit }} </td></tr>
+                
+             {% endfor %}
+            </table>
+        </div>
+    <div id="playerentry">{{ form.firstname.label }} : {{ form.firstname }} {{ form.lastname.label }} : {{ form.lastname }} {{ form.email }} {{ form.button1 }} {{ form.upload }}{% for error in form.upload.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}</div>
+        <div><table id="playerstble">
+            <tr><th>Player</th><th>Email</th></tr>
+              {% for j in y %}
+               
+               <tr><td> {{ j.firstname }}</td> <td> {{ j.lastname }}</td> <td> {{ j.email }} </td></tr>
+                
+             {% endfor %}
+            </table>
+        </div>
+    
+    <p> {{ form.sub }}</p>
+</form>
+{% endblock %}

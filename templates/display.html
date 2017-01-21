@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Hi, {{ user.nickname }}!</h1>
+<p>{{ lists.game.name}}</p>
+<p> {{ lists.game.division.label}} {{ lists.game.division.value}}</p>
+<P>{{ lists.game.bodyweight.label}} Before: {{ lists.game.bodyweight.value}} After: {{ lists.game.bodyweight.value1}}</P>
+<div>
+<table>
+<tr><th>Task</th><th>Before</th><th>After</th><th>Change</th></tr>
+{% for list in lists.game.tasks %}
+<tr><td>{{ list.item }} </td><td>{{ list.value }}</td><td>{{ list.value1 }}</td><td>{{ list.value2 }}</td></tr>
+{% endfor %}
+<tfoot><tr><td>{{ lists.game.total.item}}</td><td>{{ lists.game.total.value}}</td><td>{{ lists.game.total.value1}}</td><td>{{ lists.game.total.value2}}</td></tr></tfoot>
+</table>  
+<canvas id="myChart" width="300" height="200"></canvas></div>
+<script>
+var ctx = document.getElementById("myChart").getContext("2d");
+    var data = {
+    labels: [
+       {% for list in lists.game.tasks %}
+        "{{ list.item }}" , "{{ list.item }} ^" ,
+        {% endfor %}
+    ],
+    datasets: [
+        {
+            data: [
+                {% for list in lists.game.tasks %}
+                {{ list.value}},{{ list.value2}},
+                {% endfor %}
+            ],
+            backgroundColor: [
+                "#FF6384",
+                "#FF8384",
+                "#36A2EB",
+                "#36C2EB",
+                "#FFCE56",
+                "#FFEE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#FF8384",
+                "#36A2EB",
+                "#36C2EB",
+                "#FFCE56",
+                "#FFEE56"
+            ]
+        }]
+};    
+var myPieChart = new Chart(ctx,{
+    type: 'pie',
+    data: data
+    
+});
+
+</script>
+{% endblock %}

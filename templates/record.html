@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% from 'macros.html' import render_form %}
+
+{% block content %}
+
+    <div class="your-form">
+        {{ render_form(form, action_url='/record', action_text='Record',game=game,player=player,gametype=gametype) }}
+    </div><div>{{days}}</div>
+{% endblock content %}

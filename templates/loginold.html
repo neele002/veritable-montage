@@ -1,0 +1,27 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<script type="text/javascript">
+</script>
+<h1>Sign In</h1>
+<div class="pure-g">
+    <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
+<form action="" method="post" name="login">
+    {{ form.hidden_tag() }}
+    <p>
+        Username<br>
+        {{ form.openid(size=80) }}
+        {% for error in form.openid.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+        Password<br>
+        {{ form.password(size=80) }}
+          {% for error in form.password.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+    </p>
+    <p>{{ form.remember_me }} Remember Me</p>
+    <p><input type="submit" value="Sign In"></p>
+</form>
+{% endblock %}

@@ -1,0 +1,7 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+{% from 'macros.html' import render_form %}
+{% block content %}
+<div class="content">
+{{ render_form(form, action_url='/login', action_text='Log In') }}</div>
+{% endblock %}

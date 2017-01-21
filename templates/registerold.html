@@ -1,0 +1,25 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content">
+<h2>Register</h2>
+<form action="" method="post" name="login" class="pure-form pure-form-stacked">
+    {{ form.hidden_tag() }}
+    <p>
+        Username<br>
+        {{ form.openid(size=80) }}
+        {% for error in form.openid.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+        Password<br>
+        {{ form.password(size=80) }}
+          {% for error in form.password.errors %}
+          <span style="color: red;">[{{error}}]</span>
+        {% endfor %}<br>
+    </p>
+    <p>{{TaskArea}}</p>
+    <p>{{ form.remember_me }} Remember Me</p>
+    <p><input type="submit" value="Register" class="pure-button"></p>
+    </form></div>
+{% endblock %}

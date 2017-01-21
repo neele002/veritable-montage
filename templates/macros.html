@@ -1,0 +1,116 @@
+{% macro render_field(field, label_visible=true) -%}
+    
+    <div class="pure-u-1 pure-u-md-1-2 {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
+        <label for="{{ field.id }}">{{ field.label }}</label>
+        
+        {{ field(class_='pure-u-23-24', **kwargs) }}
+        {% if field.errors %}
+            {% for e in field.errors %}
+                <p class="help-block">{{ e }}</p>
+            {% endfor %}
+        {% endif %}
+    </div>
+{%- endmacro %}
+
+{% macro render_checkbox_field(field) -%}
+    <div class="form-group">
+       
+            {{ field(class_='pure-checkbox',type='checkbox', **kwargs) }} {{ field.label }}
+        
+    </div>
+{%- endmacro %}
+
+{% macro render_file_field(field) -%}
+       
+            {{ field(**kwargs) }} {{ field.label }}
+        
+{%- endmacro %}
+
+
+{% macro render_hidden_field(field,x,y) -%}
+    
+       
+            {{ field(**kwargs) }} 
+
+{%- endmacro %}
+
+{% macro render_submit_field(field,x,y,gametype) -%}
+    
+{% if gametype.id == 1 %}
+</div>
+{% endif %}<div class="pure-u-1 pure-u-md-1-2">
+            {{ field(class_='pure-button pure-button-primary',type='submit', **kwargs) }} 
+</div>
+{% if field.id == 'addtask' %}
+ <div> <table id="tasktble" class="pure-table">
+            <thead><tr><th>Task</th><th>Measure</th>{% if x|length > 0 and x[0].new %}<th>New</th>{% endif %}</tr></thead>
+              {% for i in x %}
+               
+               <tr><td> {{ i.item }}</td> <td> {{ i.unit }} </td>{% if 'new' in i %}<td>{{i.new}}</td>{% endif %}</tr>
+                
+             {% endfor %}
+     </table></div>
+{% endif %}
+{% if field.id == 'addplayer' %}
+ <div><table id="playerstble" class="pure-table">
+            <thead><tr><th>Firstname</th><th>Last Name</th><th>Email</th>{% if y|length > 0 and y[0].new %}<th>New</th>{% endif %}</tr></tr></thead>
+              {% for j in y %}
+               
+               <tr><td> {{ j.firstname }}</td> <td> {{ j.lastname }}</td> <td> {{ j.email }} </td>{% if 'new' in j %}<td>{{j.new}}</td>{% endif %}</tr>
+                
+             {% endfor %}
+            </table>
+        </div><br>
+{% endif %}     
+{%- endmacro %}
+
+
+{% macro render_query_field(field) -%}
+    <div class="form-group">
+       
+     {{ field.label }}  {{ field(type='select', **kwargs) }} 
+        
+    </div>
+{%- endmacro %}
+
+{% macro render_form(form, action_url='', action_text='Submit', class_='pure-form pure-form-stacked', btn_class='pure-button',game=1,player=1,gametype=1,x='',y='') -%}
+ <div class="pure-u-1 pure-u-md-2-5">
+    <form method="POST" action="{{ action_url }}" class="pure-form pure-form-stacked" role="form" enctype="multipart/form-data">
+        {{ form.hidden_tag() if form.hidden_tag }}
+        <div id="datecontainer" style="height :271px;"></div> 
+        
+        {% if caller %}
+            {{ caller() }} 
+        {% else %}
+        <fieldset>
+           {% if game.desc  %}  <legend> 
+                        {{game.desc}} : {{player.firstname}} {{player.lastname}} <br>
+                        {{gametype.type}} <br>
+                        Start: {{game.startdate }} End: {{game.enddate }}</legend>    
+                     {% endif %}
+        {% if gametype.id == 1 %}
+        <div class="pure-g">  
+        {% endif %}
+        {% for f in form %}
+                {% if f.type == 'BooleanField' %}
+                    {{ render_checkbox_field(f) }}
+                {% elif f.type == 'RadioField' %}
+                    {{ render_radio_field(f) }}
+                {% elif f.type == 'SubmitField' %}
+                    {{ render_submit_field(f,x,y,gametype) }}
+                {% elif f.type == 'QuerySelectField' %}
+                    {{ render_query_field(f) }}
+                {% elif f.type == 'FileField' %}
+                    {{ render_file_field(f) }}
+                {% elif f.type == 'HiddenField' or f.type == 'CSRFTokenField'%}
+                   
+                {% else %}
+                    {{ render_field(f) }}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+            </fieldset>    
+        
+</form>
+</div>
+{%- endmacro %}

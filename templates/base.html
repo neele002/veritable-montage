@@ -1,0 +1,95 @@
+<html>
+  <head>
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Make it a Game"> 
+    <meta id="my-data" data-name="{{days}}" data-other="{{other}}">
+    {% if title %}
+    <title>{{ title }} - microblog</title>
+    {% else %}
+    <title>Welcome to microblog</title>
+    {% endif %}
+     <script type="text/javascript" src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+   <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/pure-min.css" integrity="sha384-CCTZv2q9I9m3UOxRLaJneXrrqKwUNOzZ6NGEUMwHtShDJ+nCoiXJCAgi05KfkLGY" crossorigin="anonymous">
+      
+    <script type="text/javascript" src="/static/js/zebra_datepicker.js"></script>
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.1/build/grids-responsive-min.css">
+    <!--<![endif]-->
+    
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+            <link rel="stylesheet" href="/static/css/marketing.css">
+        <!--<![endif]-->
+  <link rel="stylesheet" media="screen" type="text/css" href="/static/css/default.css" />
+  </head>
+  <body>
+
+<div class="header">
+     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-scrollable pure-menu-fixed">
+
+        <a class="pure-menu-heading" href="/index">Make it a Game</a>
+{%  if current_user.is_authenticated  %}
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/index" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/login" class="pure-menu-link">Login</a></li>
+            <li class="pure-menu-item"><a href="/logout" class="pure-menu-link">Logout</a></li>
+            <li class="pure-menu-item"><a href="/mygame" class="pure-menu-link">MyGames</a></li>
+            <li class="pure-menu-item"><a href="/game" class="pure-menu-link">Add</a></li>
+            <li class="pure-menu-item"><a href="/register" class="pure-menu-link">Register</a></li>
+        </ul>
+{% endif  %}         
+    </div>
+</div>
+
+<div class="content-wrapper-wo">
+    <div class="content">   
+    <h2>{{title}}</h2>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+    
+    {% block content %}{% endblock %}
+</div><div id="hidedates" style='display: none;'>{{' ,'.join(days)}}</div>
+
+<div class="footer l-box is-center">
+        The footer.
+</div> 
+</div><script>
+var junk 
+$( document ).ready(function() {
+junk =  $('#hidedates').text();
+nj = junk.split(',');
+$('#datecontainer').hide();
+$('#xt').Zebra_DatePicker();
+$('#xt1').Zebra_DatePicker();     
+{%if showcalendar%}
+    $('#etshow').Zebra_DatePicker({
+    always_visible: $('#datecontainer')
+    {% if days|length > 0 %}
+    ,disabled_dates: nj
+    {% endif %}
+});
+  
+  $('#datecontainer').show();
+{% endif %}
+ });
+      </script>    
+  </body>
+</html>
